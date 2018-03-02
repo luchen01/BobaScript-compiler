@@ -1,0 +1,115 @@
+{
+    "lex": {
+        "rules": [
+           ["\\s+",                    "/* skip whitespace */"],
+           ["if",                      "return 'IF';"],
+           ["while",                   "return 'WHILE';"],
+           ["do",                      "return 'DO'"],
+
+           ["and",                    "return 'AND';"],
+           ["or",                    "return 'OR';"],
+
+           ["end",                     "return 'END';"],
+
+           ["Of",                     "return 'OF';"],
+           ["will",                     "return 'WILL';"],
+
+           ["[a-zA-Z_]\\w*",           "return 'IDENTIFIER';"],
+           ["[0-9]+(?:\\.[0-9]+)?",    "return 'NUMBER';"],
+
+           ["move()",                     "return 'MOVE()';"],
+           ["turnLeft()",                     "return 'TURNLEFT()';"],
+           ["turnRight()",                     "return 'TURNRIGHT()';"],
+
+           ["xCoordinate",                     "return 'XCOORDINATE';"],
+           ["yCoordinate",                     "return 'YCOORDINATE';"],
+           ["color",                     "return 'COLOR';"],
+           ["left",                     "return 'LEFT';"],
+           ["right",                     "return 'RIGHT';"],
+           ["top",                     "return 'TOP';"],
+           ["bottom",                     "return 'BOTTOM';"],
+
+
+           ["==|\\<=|\\>=|\\~=|\\<|\\>", "return 'COMPARATOR';"],
+
+           ["=",                       "return '=';"],
+
+           ["-",                       "return '-';"],
+           ["\\+",                     "return '+';"],
+           ["\\()",                     "return '()';"],
+           ["$",                       "return 'EOF';"]
+        ]
+    },
+
+    "operators": [
+        ["left", "+", "-"],
+    ],
+
+    "start": "program",
+
+    "bnf": {
+        "program" :[
+          [ "statementList EOF",       "return $1;"  ]
+        ],
+
+        "statementList": [
+          ["statement",                "$$ = [$1];"],
+          ["statement statementList",  "$$ = [$1].concat($2);"]
+        ],
+
+        "statement": [
+          ["if",          "$$ = $1"],
+          ["while",       "$$ = $1"],
+          ["IDENTIFIER WILL method",  "$$ = {type: 'method', object: $1, method: $3};"]
+        ],
+
+        "if": [
+          ["IF expression DO statementList END", "$$ = {type: 'if', condition: $2, body: $4};"]
+        ],
+
+        "while": [
+          ["WHILE expression DO statementList END",
+            "$$ = {type: 'while', condition: $2, body: $4}"]
+        ],
+
+        "property": [
+          ["xCoordinate",               "$$ = $1"],
+          ["yCoordinate",               "$$ = $1"],
+          ["color",                     "$$ = $1"],
+          ["left",                      "$$ = $1"],
+          ["right",                     "$$ = $1"],
+          ["top",                       "$$ = $1"],
+          ["bottom",                    "$$ = $1"],
+        ],
+
+        "method": [
+          ["move()",                     "$$ = $1"],
+          ["turnLeft()",                 "$$ = $1"],
+          ["turnRight()",                "$$ = $1"],
+        ],
+
+        "expression": [
+          ["IDENTIFIER OF property",    "$$ = {type: 'property', object: $1, property: $3};"]
+          ["expression AND expression", "$$ = $1;"],
+          ["expression OR expression",  "$$ = $1;"],
+          ["comparison",              "$$ = $1;"],
+          ["addition",                "$$ = $1;"],
+          ["substraction",                "$$ = $1;"]
+        ],
+
+        "addition": [
+          ["expression + expression",
+            "$$ = {type: 'math', left: $1, right: $3, operator: $2};"]
+        ],
+
+        "substraction": [
+          ["expression - expression",
+            "$$ = {type: 'math', left: $1, right: $3, operator: $2};"]
+        ],
+
+        "comparison": [
+          ["expression COMPARATOR expression",
+            "$$ = {type: 'comparison', operator: $2, left: $1, right: $3};"]
+        ]
+    }
+}

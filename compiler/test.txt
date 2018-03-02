@@ -1,0 +1,10 @@
+
+WHILE Boba.xCoordinate < Gate1.left DO Boba.move() END
+
+Boba.turnRight()
+
+while Boba.yCoordinate > Gate1.down do Boba.move() END
+
+IF Boba.xCoordinate > Gate1.right DO Boba.move() END
+
+FINISH
