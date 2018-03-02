@@ -11,12 +11,13 @@
 
            ["end",                     "return 'END';"],
 
-           ["Of",                     "return 'OF';"],
+           ["of",                     "return 'OF';"],
            ["will",                     "return 'WILL';"],
+           ["finish",                    "return 'FINISH';"],
 
-           ["move()",                     "return 'MOVE()';"],
-           ["turnLeft()",                 "return 'TURNLEFT()';"],
-           ["turnRight()",                "return 'TURNRIGHT()';"],
+           ["move",                     "return 'MOVE';"],
+           ["turnLeft",                 "return 'TURNLEFT';"],
+           ["turnRight",                "return 'TURNRIGHT';"],
 
            ["xCoordinate",                 "return 'XCOORDINATE';"],
            ["yCoordinate",                 "return 'YCOORDINATE';"],
@@ -25,11 +26,11 @@
            ["right",                       "return 'RIGHT';"],
            ["top",                         "return 'TOP';"],
            ["bottom",                      "return 'BOTTOM';"],
-           
+
            ["[a-zA-Z_]\\w*",           "return 'IDENTIFIER';"],
            ["[0-9]+(?:\\.[0-9]+)?",    "return 'NUMBER';"],
 
-           ["=\\<=|\\>=|\\~=|\\<|\\>",   "return 'COMPARATOR';"],
+           ["=\\<=|\\>=|\\<|\\>",   "return 'COMPARATOR';"],
            ["\\-",                           "return '-';"],
            ["\\+",                         "return '+';"],
            ["$",                           "return 'EOF';"]
@@ -55,6 +56,11 @@
         "statement": [
           ["if",          "$$ = $1"],
           ["while",       "$$ = $1"],
+          ["functionCall", "$$ = $1"],
+          ["FINISH",        "$$ = {type: 'finish'};"]
+        ],
+
+        "functionCall": [
           ["IDENTIFIER WILL method",  "$$ = {type: 'method', object: $1, method: $3};"]
         ],
 
@@ -68,23 +74,23 @@
         ],
 
         "property": [
-          ["xCoordinate",               "$$ = $1"],
-          ["yCoordinate",               "$$ = $1"],
-          ["color",                     "$$ = $1"],
-          ["left",                      "$$ = $1"],
-          ["right",                     "$$ = $1"],
-          ["top",                       "$$ = $1"],
-          ["bottom",                    "$$ = $1"]
+          ["XCOORDINATE",               "$$ = $1"],
+          ["YCOORDINATE",               "$$ = $1"],
+          ["COLOR",                     "$$ = $1"],
+          ["LEFT",                      "$$ = $1"],
+          ["RIGHT",                     "$$ = $1"],
+          ["TOP",                       "$$ = $1"],
+          ["BOTTOM",                    "$$ = $1"]
         ],
 
         "method": [
-          ["move()",                     "$$ = $1"],
-          ["turnLeft()",                 "$$ = $1"],
-          ["turnRight()",                "$$ = $1"]
+          ["MOVE",                     "$$ = $1"],
+          ["TURNLEFT",                 "$$ = $1"],
+          ["TURNRIGHT",                "$$ = $1"]
         ],
 
         "expression": [
-          ["IDENTIFIER OF property",    "$$ = {type: 'property', object: $1, property: $3};"],
+          ["property OF IDENTIFIER",    "$$ = {type: 'property', object: $3, property: $1};"],
           ["expression AND expression", "$$ = $1;"],
           ["expression OR expression",  "$$ = $1;"],
           ["comparison",              "$$ = $1;"],
