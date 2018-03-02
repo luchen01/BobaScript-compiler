@@ -9,12 +9,16 @@ const codegen = (ast) =>{
 const genNode = (node)=>{
     if(node.type === 'declaration') {
         return 'let ' + node.identifier + '=' + genNode(node.value) + ';\n';
-    } else if (node.type === 'assignment') {
-        return node.identifier + ' = ' + genNode(node.value);
+    // } else if (node.type === 'assignment') {
+    //     return node.identifier + ' = ' + genNode(node.value);
     } else if (node.type === 'identifier') {
         return node.name;
     } else if (node.type === 'number') {
         return node.value;
+    } else if (node.type === 'property') {
+        return node.object + '.' + node.property;
+    } else if (node.type === 'method') {
+        return node.object + '.' + node.method + "()";
     } else if (node.type === 'math') {
         return genNode(node.left) + ' '
           + node.operator + ' '

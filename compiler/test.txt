@@ -1,8 +1,3 @@
+if xcoordinate of Boba > right of Gate1 do Boba will move end
 
-WHILE xCoordinate of Boba< left of Gate1 DO Boba will move() END
-
-Boba will turnRight()
-
-IF xCoordinate of Boba > right of Gate1 DO Boba will move() END
-
-FINISH
+finish
