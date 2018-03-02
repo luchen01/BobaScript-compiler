@@ -1,4 +1,4 @@
-const parse = require('./grammar.js').parse;
+const parse = require('../grammar.js').parse;
 const commander = require('commander');
 const fs = require('fs');
 const codegen = require('./codegen.js');
