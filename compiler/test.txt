@@ -1,3 +1,0 @@
-if xcoordinate of Boba > right of Gate1 do Boba will move end
-
-finish
