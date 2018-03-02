@@ -4,7 +4,7 @@
            ["\\s+",                    "/* skip whitespace */"],
            ["if",                      "return 'IF';"],
            ["while",                   "return 'WHILE';"],
-           ["do",                      "return 'DO'"],
+           ["do",                      "return 'DO';"],
 
            ["and",                    "return 'AND';"],
            ["or",                    "return 'OR';"],
@@ -14,35 +14,30 @@
            ["Of",                     "return 'OF';"],
            ["will",                     "return 'WILL';"],
 
+           ["move()",                     "return 'MOVE()';"],
+           ["turnLeft()",                 "return 'TURNLEFT()';"],
+           ["turnRight()",                "return 'TURNRIGHT()';"],
+
+           ["xCoordinate",                 "return 'XCOORDINATE';"],
+           ["yCoordinate",                 "return 'YCOORDINATE';"],
+           ["color",                       "return 'COLOR';"],
+           ["left",                        "return 'LEFT';"],
+           ["right",                       "return 'RIGHT';"],
+           ["top",                         "return 'TOP';"],
+           ["bottom",                      "return 'BOTTOM';"],
+           
            ["[a-zA-Z_]\\w*",           "return 'IDENTIFIER';"],
            ["[0-9]+(?:\\.[0-9]+)?",    "return 'NUMBER';"],
 
-           ["move()",                     "return 'MOVE()';"],
-           ["turnLeft()",                     "return 'TURNLEFT()';"],
-           ["turnRight()",                     "return 'TURNRIGHT()';"],
-
-           ["xCoordinate",                     "return 'XCOORDINATE';"],
-           ["yCoordinate",                     "return 'YCOORDINATE';"],
-           ["color",                     "return 'COLOR';"],
-           ["left",                     "return 'LEFT';"],
-           ["right",                     "return 'RIGHT';"],
-           ["top",                     "return 'TOP';"],
-           ["bottom",                     "return 'BOTTOM';"],
-
-
-           ["==|\\<=|\\>=|\\~=|\\<|\\>", "return 'COMPARATOR';"],
-
-           ["=",                       "return '=';"],
-
-           ["-",                       "return '-';"],
-           ["\\+",                     "return '+';"],
-           ["\\()",                     "return '()';"],
-           ["$",                       "return 'EOF';"]
+           ["=\\<=|\\>=|\\~=|\\<|\\>",   "return 'COMPARATOR';"],
+           ["\\-",                           "return '-';"],
+           ["\\+",                         "return '+';"],
+           ["$",                           "return 'EOF';"]
         ]
     },
 
     "operators": [
-        ["left", "+", "-"],
+        ["left", "+", "-"]
     ],
 
     "start": "program",
@@ -79,17 +74,17 @@
           ["left",                      "$$ = $1"],
           ["right",                     "$$ = $1"],
           ["top",                       "$$ = $1"],
-          ["bottom",                    "$$ = $1"],
+          ["bottom",                    "$$ = $1"]
         ],
 
         "method": [
           ["move()",                     "$$ = $1"],
           ["turnLeft()",                 "$$ = $1"],
-          ["turnRight()",                "$$ = $1"],
+          ["turnRight()",                "$$ = $1"]
         ],
 
         "expression": [
-          ["IDENTIFIER OF property",    "$$ = {type: 'property', object: $1, property: $3};"]
+          ["IDENTIFIER OF property",    "$$ = {type: 'property', object: $1, property: $3};"],
           ["expression AND expression", "$$ = $1;"],
           ["expression OR expression",  "$$ = $1;"],
           ["comparison",              "$$ = $1;"],
