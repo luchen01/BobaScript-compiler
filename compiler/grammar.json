@@ -90,26 +90,30 @@
         ],
 
         "expression": [
-          ["property OF IDENTIFIER",    "$$ = {type: 'property', object: $3, property: $1};"],
-          ["expression AND expression", "$$ = $1;"],
-          ["expression OR expression",  "$$ = $1;"],
+
+          ["unitExpression AND unitExpression", "$$ = $1;"],
+          ["unitExpression OR unitExpression",  "$$ = $1;"],
           ["comparison",              "$$ = $1;"],
           ["addition",                "$$ = $1;"],
           ["substraction",                "$$ = $1;"]
         ],
 
+        "unitExpression": [
+          ["property OF IDENTIFIER",    "$$ = {type: 'property', object: $3, property: $1};"]
+        ],
+
         "addition": [
-          ["expression + expression",
+          ["unitExpression + unitExpression",
             "$$ = {type: 'math', left: $1, right: $3, operator: $2};"]
         ],
 
         "substraction": [
-          ["expression - expression",
+          ["unitExpression - unitExpression",
             "$$ = {type: 'math', left: $1, right: $3, operator: $2};"]
         ],
 
         "comparison": [
-          ["expression COMPARATOR expression",
+          ["unitExpression COMPARATOR unitExpression",
             "$$ = {type: 'comparison', operator: $2, left: $1, right: $3};"]
         ]
     }
