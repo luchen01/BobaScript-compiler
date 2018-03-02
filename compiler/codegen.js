@@ -14,9 +14,9 @@ const genNode = (node)=>{
     } else if (node.type === 'property') {
       return node.object + "." + node.property;
     } else if (node.type === 'method') {
-      return node.object + "." + node.method + "()";
+      return node.object + "." + node.method + "(); ";
     } else if (node.type === "finish"){
-      return "return";
+      return "return; ";
     } else if (node.type === 'math') {
         return genNode(node.left) + ' '
           + node.operator + ' '
