@@ -9,7 +9,7 @@ router.use('/users', (req, res) => {
     res.json({ success: true });
 });
 
-router.post('/parsBobaScript', (req, res) => {
+router.post('/parseBobaScript', (req, res) => {
   res.send(compiler(req.body.bobaScript));
 });
 
