@@ -4,6 +4,9 @@
            ["\\s+",                    "/* skip whitespace */"],
            ["if",                      "return 'IF';"],
            ["while",                   "return 'WHILE';"],
+           ["(",                       "return '(';"],
+           [")",                       "return ')';"],
+
            ["do",                      "return 'DO';"],
 
            ["and",                    "return 'AND';"],
@@ -27,13 +30,14 @@
            ["top",                         "return 'TOP';"],
            ["bottom",                      "return 'BOTTOM';"],
 
-           ["[a-zA-Z_]\\w*",           "return 'IDENTIFIER';"],
-           ["[0-9]+(?:\\.[0-9]+)?",    "return 'NUMBER';"],
+           ["[a-zA-Z_]\\w*",              "return 'IDENTIFIER';"],
+           ["[0-9]+(?:\\.[0-9]+)?",       "return 'NUMBER';"],
 
-           ["=\\<=|\\>=|\\<|\\>",   "return 'COMPARATOR';"],
-           ["\\-",                           "return '-';"],
-           ["\\+",                         "return '+';"],
-           ["$",                           "return 'EOF';"]
+           ["=\\<=|\\>=|\\<|\\>",        "return 'COMPARATOR';"],
+
+           ["\\-",                       "return '-';"],
+           ["\\+",                       "return '+';"],
+           ["$",                         "return 'EOF';"]
         ]
     },
 
@@ -90,15 +94,24 @@
         ],
 
         "expression": [
-
-          ["unitExpression AND unitExpression", "$$ = $1;"],
-          ["unitExpression OR unitExpression",  "$$ = $1;"],
+          ["and", "$$ = {type: 'and', left: $1, right: $3}"],
+          ["or",  "$$ = $1;"],
           ["comparison",              "$$ = $1;"],
           ["addition",                "$$ = $1;"],
-          ["substraction",                "$$ = $1;"]
+          ["substraction",                "$$ = $1;"],
+          ["unitExpression",          "$$ = $1;"]
+        ],
+
+        "and" : [
+          ["( comparison AND comparison )", "$$ = {type: 'and', left: $2, right: $4}"]
+        ],
+
+        "or" : [
+          ["(comparison OR comparison )", "$$ = {type: 'or', left: $2, right: $4}"]
         ],
 
         "unitExpression": [
+          ["( expression )",          "$$ = $2;"],
           ["property OF IDENTIFIER",    "$$ = {type: 'property', object: $3, property: $1};"]
         ],
 

@@ -15,6 +15,10 @@ const genNode = (node)=>{
         return node.object + "." + node.property;
     } else if (node.type === 'method') {
         return node.object + "." + node.method + "()";
+    } else if (node.type === 'and') {
+        return "(" + genNode(node.left) + "&&" + genNode(node.right) + ")";
+    } else if (node.type === 'or') {
+        return "(" + genNode(node.left) + "||" + genNode(node.right) + ")";
     } else if (node.type === "finish") {
         return "return";
     } else if (node.type === 'math') {
