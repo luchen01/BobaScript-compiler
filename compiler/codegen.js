@@ -12,7 +12,7 @@ const genNode = (node)=>{
     } else if (node.type === 'number') {
         return node.value;
     } else if (node.type === 'property') {
-      return node.object + "." + node.property;
+        return node.object + "." + node.property;
     } else if (node.type === 'method') {
       return node.object + "." + node.method + "(); ";
     } else if (node.type === "finish"){
@@ -48,7 +48,7 @@ const genNode = (node)=>{
             + genNode(node.right);
         // return node.left + ' ' + node.operator + ' ' + node.right;
     } else {
-        throw new Error('Unkonwn node: ' + JSON.stringify(node));
+        return new Error('Unkonwn node: ' + JSON.stringify(node));
     }
 };
 
