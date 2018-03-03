@@ -19,6 +19,7 @@ module.exports = function(source) {
         console.log(e);
         return {
             success: false,
-            error: e};
+            error: e
+          };
     }
 };
