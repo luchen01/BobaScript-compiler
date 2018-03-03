@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const compiler = require('../compiler/compiler.js');
 
-const compiler = require("../compiler/compiler");
-
 // YOUR API ROUTES HERE
 
 // console.log(compiler("boba will not move"));

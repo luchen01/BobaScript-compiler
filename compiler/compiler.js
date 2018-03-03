@@ -16,6 +16,7 @@ module.exports = function(source) {
             javascript: js
         };
     } catch(e) {
+        console.log(e);
         return {
             success: false,
             error: e};
