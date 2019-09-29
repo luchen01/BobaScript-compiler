@@ -21,7 +21,7 @@
 
            ["xCoordinate",                 "return 'XCOORDINATE';"],
            ["yCoordinate",                 "return 'YCOORDINATE';"],
-           ["color",                       "return 'COLOR';"],
+           ["value",                       "return 'VALUE';"],
            ["left",                        "return 'LEFT';"],
            ["right",                       "return 'RIGHT';"],
            ["top",                         "return 'TOP';"],
@@ -91,7 +91,7 @@
 
         "expression": [
           ["comparison AND expression", "$$ = {type: 'expression', left: $1, logic: $2, right: $3};"],
-          ["comparison OR expression",  "$$ = {type: 'expression', left: $1, logic: $2, right: $3};"],
+          ["comparison OR expression",  "$$ = {type: 'expression', left: $1, logic: $2, right:  $3};"],
           ["comparison",                "$$ = $1;"]
         ],
 
